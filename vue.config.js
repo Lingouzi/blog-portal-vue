@@ -6,6 +6,7 @@ function resolve(dir) {
     return path.join(__dirname, dir)
 }
 
+// 读取配置的blog的名称
 const name = defaultSettings.title || 'ybq87.top'
 const port = 8083
 module.exports = {

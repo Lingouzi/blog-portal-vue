@@ -18,8 +18,8 @@
                 </el-tooltip>
             </el-col>
             <el-col :span="6">
-                <router-link to="//github.com/Lingouzi/ergouzi-blog" target="_blank" alt="Github"
-                             title="github.com/Lingouzi/ergouzi-blog">
+                <router-link to="//github.com/Lingouzi/blog-portal-vue" target="_blank" alt="Github"
+                             title="github.com/Lingouzi/blog-portal-vue">
                     <font-awesome-icon :icon="['fab', 'github']" size="2x" :style="{ color: 'black' }"/>
                 </router-link>
             </el-col>

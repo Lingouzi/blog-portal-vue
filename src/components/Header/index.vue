@@ -30,7 +30,7 @@
                 <div slot="content"><img width="150" src="http://img.ybq87.top/static/img/qrcode.jpg" alt="ybq"/></div>
                 <font-awesome-icon class="mr-20" :icon="['fab', 'weixin']" size="lg" :style="{ color: '#75b75e' }"/>
             </el-tooltip>
-            <el-link :underline="false" class="mr-20" href="//github.com/Lingouzi/ergouzi-blog" target="_blank">
+            <el-link :underline="false" class="mr-20" href="//github.com/Lingouzi/blog-portal-vue" target="_blank">
                 <font-awesome-icon :icon="['fab', 'github']" size="lg"/>
             </el-link>
         </el-col>

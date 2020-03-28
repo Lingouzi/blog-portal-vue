@@ -1,4 +1,4 @@
-# ergouzi-blog
+# blog-portal-vue
 
 ## Project setup
 ```
