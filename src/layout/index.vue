@@ -27,7 +27,7 @@
             goto(path, index) {
                 this.index = index
                 this.$router.push(path)
-                    .catch(err => {
+                    .catch(() => {
                     })
             }
         }
