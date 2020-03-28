@@ -11,10 +11,6 @@ export const routes = [
         hidden: true
     },
     {
-        path: '/portal',
-        redirect: '/index'
-    },
-    {
         path: '/',
         component: Layout,
         redirect: '/index',

@@ -6,9 +6,9 @@
         </el-row>
         <el-row :gutter="10" type="flex" justify="center">
             <el-col :span="6">
-                <router-link to="//weibo.com/linergouzi" target="_blank" alt="微博" title="@怎么了老弟">
+                <a href="https://weibo.com/linergouzi" target="_blank" title="@怎么了老弟">
                     <font-awesome-icon :icon="['fab', 'weibo']" size="2x" :style="{ color: 'red' }"/>
-                </router-link>
+                </a>
             </el-col>
             <el-col :span="6">
                 <el-tooltip placement="top">
@@ -18,10 +18,9 @@
                 </el-tooltip>
             </el-col>
             <el-col :span="6">
-                <router-link to="//github.com/Lingouzi/blog-portal-vue" target="_blank" alt="Github"
-                             title="github.com/Lingouzi/blog-portal-vue">
+                <a href="https://github.com/Lingouzi/blog-portal-vue" target="_blank" title="github.com/Lingouzi/blog-portal-vue">
                     <font-awesome-icon :icon="['fab', 'github']" size="2x" :style="{ color: 'black' }"/>
-                </router-link>
+                </a>
             </el-col>
         </el-row>
         <el-row :gutter="10" type="flex" justify="center">
