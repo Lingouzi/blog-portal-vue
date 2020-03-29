@@ -25,8 +25,8 @@ module.exports = {
             errors: true
         },
         proxy: {
-            '/v': {
-                target: 'http://localhost:8081/v',
+            '/': {
+                target: 'http://localhost:8081/',
                 changeOrigin: true
             }
         }

@@ -5,7 +5,7 @@
                 <!-- 设置相同的line-height就可以居中 -->
                 <el-breadcrumb separator=">" style="line-height: 60px;">
                     <el-breadcrumb-item :to="{ path: '/' }">Blog</el-breadcrumb-item>
-                    <el-breadcrumb-item :to="{ path: '/post/xxx' }">当前标题</el-breadcrumb-item>
+                    <el-breadcrumb-item :to="{ path: '/posts/xxx' }">当前标题</el-breadcrumb-item>
                 </el-breadcrumb>
             </el-header>
             <el-main>
@@ -40,18 +40,23 @@
                             </figure>
                             <p>这个问题本身不难，实现的方法也有一些，主要是有一些细节需要注意。</p>
                             <h2 class="heading" data-id="heading-0">border-image</h2>
-                            <p><code>border-image</code> 是 CSS 规范 <a target="_blank" href="https://drafts.csswg.org/css-backgrounds-3/#border-images" rel="nofollow noopener noreferrer">CSS
+                            <p><code>border-image</code> 是 CSS 规范 <a target="_blank" href="https://drafts.csswg.org/css-backgrounds-3/#border-images"
+                                                                     rel="nofollow noopener noreferrer">CSS
                                 Backgrounds and Borders Module Level 3</a> (最新一版的关于 background 和 border 的官方规范) 新增的一个属性值。</p>
                             <p>解释一下：<code>clip-path: inset(0 round 10px)</code> 。</p>
                             <ul>
                                 <li>clip-path: inset() 是矩形裁剪</li>
-                                <li>inset() 的用法有多种，在这里 <code>inset(0 round 10px)</code> 可以理解为，实现一个父容器大小（完全贴合，垂直水平居中于父容器）且 <code>border-radius: 10px</code> 的容器，将这个元素之外的所有东西裁剪掉（即不可见）。</li>
+                                <li>inset() 的用法有多种，在这里 <code>inset(0 round 10px)</code> 可以理解为，实现一个父容器大小（完全贴合，垂直水平居中于父容器）且 <code>border-radius: 10px</code>
+                                    的容器，将这个元素之外的所有东西裁剪掉（即不可见）。
+                                </li>
                             </ul>
                             <p>非常完美，效果如下：</p>
                             <p>如果还有什么疑问或者建议，可以多多交流，原创文章，文笔有限，才疏学浅，文中若有不正之处，万望告知。</p>
                         </div>
                     </article>
                     <!-- 上一篇，下一篇推荐 -->
+                    <article v-highlight class="article" v-html="content"/>
+
                 </div>
             </el-main>
         </el-container>
@@ -81,12 +86,21 @@
 
 <script>
     import Copyright from '@/components/Copyright'
+    import { getPostById } from '@/api/post/post'
+    import highlight from '@/directive/highlight'
+    import { showdown } from 'vue-showdown/dist/vue-showdown.esm'
+
+    showdown.setFlavor('github')
+    const converter = new showdown.Converter()
+    converter.setOption('tables', true) // 将表格显示出来
 
     export default {
         name: 'Post',
+        directives: { highlight },
         components: { Copyright },
         data() {
             return {
+                content: '',
                 commentData: [
                     {
                         id: 'comment0001',
@@ -137,10 +151,23 @@
                     }
                 ]
             }
+        },
+        created() {
+            this.getPostById()
+        },
+        methods: {
+            getPostById() {
+                getPostById({ id: 1005 })
+                    .then(response => {
+                        console.log(response)
+                        const { content } = response.data
+                        this.content = converter.makeHtml(content)
+                    })
+            }
         }
     }
 </script>
 
 <style scoped>
-
+    @import "~@/assets/css/markdown-vue.css";
 </style>
