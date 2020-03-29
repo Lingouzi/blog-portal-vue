@@ -18,6 +18,7 @@
         "highlight": "^0.2.4",
         "js-cookie": "^2.2.1",
         "nprogress": "^0.2.0",
+        "showdown-toc": "^1.0.1",
         "vue": "^2.6.11",
         "vue-router": "^3.1.5",
         "vue-showdown": "^2.4.1",

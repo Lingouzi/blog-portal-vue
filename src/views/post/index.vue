@@ -76,7 +76,10 @@
                 </el-row>
             </el-card>
             <el-card class="mt-1em" shadow="hover">
-                <div>目录</div>
+                <el-divider>目录</el-divider>
+                <div>
+                    <p v-for="(t,index) in toc" :key="index" :class="handleStyle(t.level)" @click="gotoAnchor(t.anchor)">{{ t.text }}</p>
+                </div>
             </el-card>
 
             <copyright class="mt-1em"/>
@@ -89,10 +92,7 @@
     import { getPostById } from '@/api/post/post'
     import highlight from '@/directive/highlight'
     import { showdown } from 'vue-showdown/dist/vue-showdown.esm'
-
-    showdown.setFlavor('github')
-    const converter = new showdown.Converter()
-    converter.setOption('tables', true) // 将表格显示出来
+    import showdownToc from 'showdown-toc'
 
     export default {
         name: 'Post',
@@ -101,6 +101,7 @@
         data() {
             return {
                 content: '',
+                toc: [],
                 commentData: [
                     {
                         id: 'comment0001',
@@ -154,6 +155,9 @@
         },
         created() {
             this.getPostById()
+            showdown.setFlavor('github')
+            // 生成目录插件
+            showdown.Converter({ extensions: [showdownToc({ toc: this.toc })] })
         },
         methods: {
             getPostById() {
@@ -161,13 +165,65 @@
                     .then(response => {
                         console.log(response)
                         const { content } = response.data
-                        this.content = converter.makeHtml(content)
+                        // 转换为html
+                        this.content = showdown.makeHtml(content)
                     })
+            },
+            gotoAnchor(anchor) {
+                // 快速跳到 锚点
+                document.querySelector('#' + anchor)
+                    .scrollIntoView(true)
+            },
+            handleStyle(level) {
+                // 定义目录的样式
+                if (parseInt(level) === 1) {
+                    return {
+                        'catalog-1': true
+                    }
+                } else if (parseInt(level) === 2) {
+                    return {
+                        'catalog-2': true
+                    }
+                } else if (parseInt(level) === 3) {
+                    return {
+                        'catalog-3': true
+                    }
+                } else if (parseInt(level) === 4) {
+                    return {
+                        'catalog-4': true
+                    }
+                }
+                return {}
             }
         }
     }
 </script>
 
 <style scoped>
+    /* markdown解析成html后的样式 */
     @import "~@/assets/css/markdown-vue.css";
+
+    .catalog-1 {
+        cursor: pointer;
+        margin-left: 0;
+        font-size: 16px
+    }
+
+    .catalog-2 {
+        cursor: pointer;
+        margin-left: 20px;
+        font-size: 14px
+    }
+
+    .catalog-3 {
+        cursor: pointer;
+        margin-left: 40px;
+        font-size: 12px
+    }
+
+    .catalog-4 {
+        cursor: pointer;
+        margin-left: 60px;
+        font-size: 10px
+    }
 </style>
