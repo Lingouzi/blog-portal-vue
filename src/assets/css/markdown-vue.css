@@ -101,17 +101,11 @@ h3 a {
     color: #777;
 }
 
-.article p,
-blockquote,
-ul,
-ol,
-dl,
-table {
+.article p, blockquote, ul, li, ol, dl, table {
     margin: 0.8em 0;
 }
 
-.article li > ol,
-li > ul {
+.article li > ol, li > ul {
     margin: 0 0;
 }
 
@@ -125,25 +119,25 @@ li > ul {
     box-sizing: content-box;
 }
 
-.article  > h2:first-child {
+.article > h2:first-child {
     margin-top: 0;
     padding-top: 0;
 }
 
-.article  > h1:first-child {
+.article > h1:first-child {
     margin-top: 0;
     padding-top: 0;
 }
 
-.article  > h1:first-child + h2 {
+.article > h1:first-child + h2 {
     margin-top: 0;
     padding-top: 0;
 }
 
-.article  > h3:first-child,
-.article  > h4:first-child,
-.article  > h5:first-child,
-.article  > h6:first-child {
+.article > h3:first-child,
+.article > h4:first-child,
+.article > h5:first-child,
+.article > h6:first-child {
     margin-top: 0;
     padding-top: 0;
 }

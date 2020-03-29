@@ -35,11 +35,9 @@
             <!-- 关于我们 -->
             <copyright class="mt-1em"/>
 
-            <el-card class="mt-1em" shadow="hover">
+            <el-card ref="tocCard" :class="{'mt-1em':true,'fixTop':fixed}" shadow="hover">
                 <el-divider>目录</el-divider>
-                <div>
-                    <p v-for="(t,index) in toc" :key="index" :class="handleStyle(t.level)" @click="gotoAnchor(t.anchor)">{{ t.text }}</p>
-                </div>
+                <div class="tocs" v-html="result"/>
             </el-card>
 
         </el-aside>
@@ -53,15 +51,19 @@
     import { showdown } from 'vue-showdown/dist/vue-showdown.esm'
     import showdownToc from 'showdown-toc'
 
+    import toc from '@/utils/toc'
+
     export default {
         name: 'Post',
         directives: { highlight },
         components: { Copyright },
         data() {
             return {
-                content: '',
-                toc: [],
-                commentData: [
+                fixed: false, // 目录是否置顶浮动
+                content: '', // 正文内容
+                toc: [], // 目录的数组结构
+                result: '', // 目录变为html 结构
+                commentData: [ // 测试评论结构
                     {
                         id: 'comment0001',
                         date: '2018-07-05 08:30',
@@ -117,8 +119,21 @@
             showdown.setFlavor('github')
             // 生成目录插件
             showdown.Converter({ extensions: [showdownToc({ toc: this.toc })] })
+            // 开启监听滑动
+            window.addEventListener('scroll', this.handleScroll, true)
+        },
+        beforeDestroy() {
+            // 移除监听
+            window.removeEventListener('scroll', this.handleScroll, true)
         },
         methods: {
+            handleScroll() {
+                this.$nextTick(function () {
+                    // 如果滚动区域高度大于410,那么就将目录进行浮动
+                    this.fixed = scrollY > 410
+                    // const top = this.$refs.tocCard.$el.getBoundingClientRect().top
+                })
+            },
             getPostById() {
                 getPostById({ id: 1005 })
                     .then(response => {
@@ -126,6 +141,7 @@
                         const { content } = response.data
                         // 转换为html
                         this.content = showdown.makeHtml(content)
+                        this.result = toc(this.toc)
                     })
             },
             gotoAnchor(anchor) {
@@ -157,7 +173,9 @@
         }
     }
 </script>
+<style>
 
+</style>
 <style scoped>
     /* markdown解析成html后的样式 */
     @import "~@/assets/css/markdown-vue.css";
@@ -185,4 +203,33 @@
         margin-left: 60px;
         font-size: 10px
     }
+
+    .fixTop {
+        position: fixed;
+        top: 0;
+    }
+
+    .tocs >>> .catalog-list {
+        font-weight: bold;
+        padding-left: 20px;
+        position: relative;
+        font-size: 15px;
+    }
+
+    .tocs >>> .catalog-list ul > ul > li {
+        font-weight: normal;
+        font-size: 14px;
+        color: #333333;
+    }
+
+    .tocs >>> .catalog-list ul > ul > ul > li {
+        font-size: 13px;
+        color: #333333;
+    }
+
+    .tocs >>> .catalog-list li:hover {
+        cursor: pointer;
+        color: #20a0ff;
+    }
+
 </style>
