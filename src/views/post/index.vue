@@ -10,53 +10,9 @@
             </el-header>
             <el-main>
                 <div class="main-area">
-                    <article>
-                        <meta itemprop="url" content="https://juejin.im/post/5e4a3a20e51d45270c277754"/>
-                        <meta itemprop="headline" content="巧妙实现带圆角的渐变边框"/>
-                        <meta itemprop="keywords" content="CSS,前端"/>
-                        <meta itemprop="datePublished" content="2020-02-17T07:08:00.447Z"/>
-                        <meta itemprop="image" content="https://user-gold-cdn.xitu.io/2020/2/17/17051f3262e55f5b?w=293&amp;h=307&amp;f=png&amp;s=53573"/>
-                        <div itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person">
-                            <meta itemprop="name" content="chokcoco"/>
-                            <meta itemprop="url" content="https://juejin.im/user/574fa4b3e4fd690054c55d9d"/>
-                        </div>
-                        <div itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization">
-                            <meta itemprop="name" content="掘金"/>
-                            <div itemprop="logo" itemscope="itemscope" itemtype="https://schema.org/ImageObject">
-                                <meta itemprop="url" content="https://b-gold-cdn.xitu.io/icon/icon-white-180.png"/>
-                                <meta itemprop="width" content="180"/>
-                                <meta itemprop="height" content="180"/>
-                            </div>
-                        </div>
-                        <div>大图地址</div>
-                        <h1>title</h1>
-                        <div data-v-55484a2b="" data-id="5e4a3bd0f265da57127e3e59" itemprop="articleBody" class="article-content">
-                            <p>如何实现下面这个渐变的边框效果：</p>
-                            <figure>
-                                <img alt="image" class="lazyload inited loaded"
-                                     data-src="https://user-gold-cdn.xitu.io/2020/2/17/17051f2ed9d25fbb?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" data-width="218"
-                                     data-height="112" src="https://user-gold-cdn.xitu.io/2020/2/17/17051f2ed9d25fbb?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"/>
-                                <figcaption/>
-                            </figure>
-                            <p>这个问题本身不难，实现的方法也有一些，主要是有一些细节需要注意。</p>
-                            <h2 class="heading" data-id="heading-0">border-image</h2>
-                            <p><code>border-image</code> 是 CSS 规范 <a target="_blank" href="https://drafts.csswg.org/css-backgrounds-3/#border-images"
-                                                                     rel="nofollow noopener noreferrer">CSS
-                                Backgrounds and Borders Module Level 3</a> (最新一版的关于 background 和 border 的官方规范) 新增的一个属性值。</p>
-                            <p>解释一下：<code>clip-path: inset(0 round 10px)</code> 。</p>
-                            <ul>
-                                <li>clip-path: inset() 是矩形裁剪</li>
-                                <li>inset() 的用法有多种，在这里 <code>inset(0 round 10px)</code> 可以理解为，实现一个父容器大小（完全贴合，垂直水平居中于父容器）且 <code>border-radius: 10px</code>
-                                    的容器，将这个元素之外的所有东西裁剪掉（即不可见）。
-                                </li>
-                            </ul>
-                            <p>非常完美，效果如下：</p>
-                            <p>如果还有什么疑问或者建议，可以多多交流，原创文章，文笔有限，才疏学浅，文中若有不正之处，万望告知。</p>
-                        </div>
-                    </article>
-                    <!-- 上一篇，下一篇推荐 -->
                     <article v-highlight class="article" v-html="content"/>
 
+                    <!-- 上一篇，下一篇推荐 -->
                 </div>
             </el-main>
         </el-container>
@@ -75,6 +31,10 @@
                     <el-col>作者名称</el-col>
                 </el-row>
             </el-card>
+
+            <!-- 关于我们 -->
+            <copyright class="mt-1em"/>
+
             <el-card class="mt-1em" shadow="hover">
                 <el-divider>目录</el-divider>
                 <div>
@@ -82,7 +42,6 @@
                 </div>
             </el-card>
 
-            <copyright class="mt-1em"/>
         </el-aside>
     </el-container>
 </template>
