@@ -10,8 +10,7 @@
             </el-header>
             <el-main>
                 <div class="main-area">
-                    <article v-highlight class="article" v-html="content"/>
-
+                    <article ref="article" v-highlight class="article" v-html="content"/>
                     <!-- 上一篇，下一篇推荐 -->
                 </div>
             </el-main>
@@ -63,6 +62,7 @@
                 content: '', // 正文内容
                 toc: [], // 目录的数组结构
                 result: '', // 目录变为html 结构
+                listHeight: [],
                 commentData: [ // 测试评论结构
                     {
                         id: 'comment0001',
@@ -126,12 +126,32 @@
             // 移除监听
             window.removeEventListener('scroll', this.handleScroll, true)
         },
+        mounted() {
+            console.log('..')
+        },
         methods: {
             handleScroll() {
                 this.$nextTick(function () {
                     // 如果滚动区域高度大于410,那么就将目录进行浮动
+                    const scrollY = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
                     this.fixed = scrollY > 410
+                    this.listHeight.map((h, i) => {
+                        let h1 = this.listHeight[i]
+                        let h2 = this.listHeight[i + 1]
+                        if (scrollY >= h1 && scrollY <= h2) {
+                            // 点亮当前的h标签
+                            // const data: Element = document.getElementsByClassName(`toc-link-#${i}`)[0] as Element // 获取文章滚动到目录的目标元素
+                            // this.linkLists.forEach((list: Element) => {
+                            //     let top: number = 0
+                            //     top = i > 7 ? -28 * (i - 7) : 0
+                            //     this.target[0].style.marginTop = `${top}px`
+                            //     data == list ? list.classList.add('active') : list.classList.remove('active') // 其他移除active
+                            // })
+                        }
+                    })
                     // const top = this.$refs.tocCard.$el.getBoundingClientRect().top
+                    // 目录的ul li 随着滚动 active 样式
+                    //
                 })
             },
             getPostById() {
@@ -142,7 +162,19 @@
                         // 转换为html
                         this.content = showdown.makeHtml(content)
                         this.result = toc(this.toc)
+
+                        this.$nextTick(function () {
+                            this.getTitleHeight()
+                        })
                     })
+            },
+            getTitleHeight() {
+                // 得到每个h1标题的top位置数值,
+                const elementsByTagName = this.$refs.article.querySelectorAll('h1,h2,h3,h4')
+                console.log(elementsByTagName)
+                elementsByTagName.forEach((item, index) => {
+                    this.listHeight.push(item.offsetTop)
+                })
             },
             gotoAnchor(anchor) {
                 // 快速跳到 锚点
