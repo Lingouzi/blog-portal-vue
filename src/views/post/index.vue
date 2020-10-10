@@ -62,7 +62,8 @@
                 content: '', // 正文内容
                 toc: [], // 目录的数组结构
                 result: '', // 目录变为html 结构
-                listHeight: [],
+                listHeight: [], // 记录标题所在的位置距离顶部的高度
+                listLabel: [], // 记录标题的#id
                 commentData: [ // 测试评论结构
                     {
                         id: 'comment0001',
@@ -138,8 +139,10 @@
                     this.listHeight.map((h, i) => {
                         let h1 = this.listHeight[i]
                         let h2 = this.listHeight[i + 1]
+                        // 滚动到 2个节点的中间区域的时候, 点亮 h2
                         if (scrollY >= h1 && scrollY <= h2) {
-                            // 点亮当前的h标签
+                            const item = this.listLabel[i]
+                            // item.classList.contains('active') ? item.classList.add('active') : item.classList.remove('active')
                             // const data: Element = document.getElementsByClassName(`toc-link-#${i}`)[0] as Element // 获取文章滚动到目录的目标元素
                             // this.linkLists.forEach((list: Element) => {
                             //     let top: number = 0
@@ -171,9 +174,10 @@
             getTitleHeight() {
                 // 得到每个h1标题的top位置数值,
                 const elementsByTagName = this.$refs.article.querySelectorAll('h1,h2,h3,h4')
-                console.log(elementsByTagName)
                 elementsByTagName.forEach((item, index) => {
+                    console.log(item, item.id, item.classList)
                     this.listHeight.push(item.offsetTop)
+                    this.listLabel.push(item)
                 })
             },
             gotoAnchor(anchor) {
@@ -264,4 +268,8 @@
         color: #20a0ff;
     }
 
+    .tocs >>> .active {
+        font-weight: bold;
+        color: #20a0ff;
+    }
 </style>
